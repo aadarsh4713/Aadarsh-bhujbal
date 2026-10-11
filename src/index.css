@@ -1,0 +1,152 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-display: 'Barlow Condensed', 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --color-electric-lime: #ccff00;
+  --color-carbon-950: #0a0d12;
+  --color-carbon-900: #121721;
+  --color-carbon-850: #18202e;
+  --color-carbon-800: #222c3d;
+  --color-carbon-700: #334155;
+}
+
+:root, [data-theme="lime"] {
+  color-scheme: dark;
+  --brand-color: #ccff00;
+  --brand-hover: #b8e600;
+  --brand-text: #000000;
+  --brand-subtle: rgba(204, 255, 0, 0.15);
+  --brand-border: rgba(204, 255, 0, 0.4);
+  --brand-glow: rgba(204, 255, 0, 0.3);
+}
+
+[data-theme="gold"] {
+  --brand-color: #f59e0b;
+  --brand-hover: #d97706;
+  --brand-text: #000000;
+  --brand-subtle: rgba(245, 158, 11, 0.15);
+  --brand-border: rgba(245, 158, 11, 0.4);
+  --brand-glow: rgba(245, 158, 11, 0.3);
+}
+
+[data-theme="crimson"] {
+  --brand-color: #f43f5e;
+  --brand-hover: #e11d48;
+  --brand-text: #ffffff;
+  --brand-subtle: rgba(244, 63, 94, 0.15);
+  --brand-border: rgba(244, 63, 94, 0.4);
+  --brand-glow: rgba(244, 63, 94, 0.3);
+}
+
+[data-theme="emerald"] {
+  --brand-color: #10b981;
+  --brand-hover: #059669;
+  --brand-text: #000000;
+  --brand-subtle: rgba(16, 185, 129, 0.15);
+  --brand-border: rgba(16, 185, 129, 0.4);
+  --brand-glow: rgba(16, 185, 129, 0.3);
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #0a0d12;
+  color: #f1f5f9;
+  overscroll-behavior-y: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Tabular numbers for gym stats & timers */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Hide scrollbar for horizontal chip bars */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Safe area padding for mobile notches and bottom bars */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 16px);
+}
+
+/* Dynamic Brand Utility Classes */
+.text-brand {
+  color: var(--brand-color);
+}
+.bg-brand {
+  background-color: var(--brand-color);
+  color: var(--brand-text);
+}
+.bg-brand:hover {
+  background-color: var(--brand-hover);
+}
+.border-brand {
+  border-color: var(--brand-border);
+}
+.bg-brand-subtle {
+  background-color: var(--brand-subtle);
+}
+
+/* Rotating Rainbow Glow Border Animation */
+@keyframes rainbow-conic {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rainbow-glow-wrapper {
+  position: relative;
+  display: inline-flex;
+  padding: 1.5px;
+  border-radius: 0.85rem;
+  overflow: hidden;
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.06), 0 4px 20px rgba(0, 0, 0, 0.4);
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.rainbow-glow-wrapper:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.12), 0 6px 24px rgba(0, 0, 0, 0.5);
+}
+
+.rainbow-glow-wrapper:active {
+  transform: scale(0.98);
+}
+
+.rainbow-glow-wrapper::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    #ff0055,
+    #ff7700,
+    #ffea00,
+    #00ff66,
+    #00eeff,
+    #8800ff,
+    #ff0055
+  );
+  animation: rainbow-conic 4s linear infinite;
+  z-index: 0;
+}
+
+.rainbow-glow-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  border-radius: calc(0.85rem - 1.5px);
+}

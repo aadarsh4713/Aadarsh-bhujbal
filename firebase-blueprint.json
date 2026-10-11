@@ -1,0 +1,85 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User account profile and athlete settings",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Auth UID of the athlete" },
+        "email": { "type": "string", "description": "Email address" },
+        "displayName": { "type": "string", "description": "Athlete display name", "maxLength": 100 },
+        "weightUnit": { "type": "string", "enum": ["kg", "lbs"], "description": "Preferred unit" },
+        "createdAt": { "type": "string", "description": "Account creation timestamp" },
+        "updatedAt": { "type": "string", "description": "Last settings update timestamp" }
+      },
+      "required": ["userId", "email", "weightUnit"]
+    },
+    "WorkoutLog": {
+      "title": "WorkoutLog",
+      "description": "Completed workout session record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique workout ID" },
+        "userId": { "type": "string", "description": "Owner UID" },
+        "title": { "type": "string", "description": "Workout title", "maxLength": 120 },
+        "routineId": { "type": "string", "description": "Optional routine template ID" },
+        "startTime": { "type": "number", "description": "Start epoch timestamp" },
+        "endTime": { "type": "number", "description": "End epoch timestamp" },
+        "durationSeconds": { "type": "number", "description": "Duration in seconds" },
+        "totalVolume": { "type": "number", "description": "Total volume lifted" },
+        "totalSetsCompleted": { "type": "number", "description": "Number of completed sets" },
+        "notes": { "type": "string", "description": "Athlete session reflection notes", "maxLength": 2000 },
+        "createdAt": { "type": "string", "description": "Server creation timestamp" }
+      },
+      "required": ["id", "userId", "title", "startTime", "endTime", "totalVolume", "totalSetsCompleted"]
+    },
+    "CustomRoutine": {
+      "title": "CustomRoutine",
+      "description": "User-designed training routine or split configuration",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique routine ID" },
+        "userId": { "type": "string", "description": "Owner UID" },
+        "title": { "type": "string", "description": "Routine title", "maxLength": 120 },
+        "description": { "type": "string", "description": "Routine description", "maxLength": 500 },
+        "category": { "type": "string", "description": "Split category" },
+        "estimatedMinutes": { "type": "number", "description": "Estimated workout duration" },
+        "createdAt": { "type": "string", "description": "Creation timestamp" }
+      },
+      "required": ["id", "userId", "title", "category"]
+    },
+    "PersonalRecordDoc": {
+      "title": "PersonalRecordDoc",
+      "description": "Historical peak performance and 1RM for an exercise",
+      "type": "object",
+      "properties": {
+        "exerciseId": { "type": "string", "description": "Exercise identifier", "maxLength": 128 },
+        "exerciseName": { "type": "string", "description": "Exercise name", "maxLength": 120 },
+        "userId": { "type": "string", "description": "Owner UID" },
+        "maxWeight": { "type": "number", "description": "Heaviest weight moved" },
+        "estimated1RM": { "type": "number", "description": "Highest calculated 1-rep max" },
+        "maxVolumeSingleSet": { "type": "number", "description": "Max single set volume" },
+        "achievedAt": { "type": "number", "description": "Timestamp when PR was achieved" }
+      },
+      "required": ["exerciseId", "exerciseName", "userId", "maxWeight", "estimated1RM"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "User profile and settings documents"
+    },
+    "/users/{userId}/workouts/{workoutId}": {
+      "schema": { "$ref": "#/entities/WorkoutLog" },
+      "description": "Completed workout logs for the authenticated athlete"
+    },
+    "/users/{userId}/routines/{routineId}": {
+      "schema": { "$ref": "#/entities/CustomRoutine" },
+      "description": "Custom routines and program splits created by the user"
+    },
+    "/users/{userId}/records/{recordId}": {
+      "schema": { "$ref": "#/entities/PersonalRecordDoc" },
+      "description": "Personal records achieved on specific exercises"
+    }
+  }
+}

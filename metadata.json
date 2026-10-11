@@ -1,0 +1,6 @@
+{
+  "name": "ApexFit - Athletic Workout Tracker & Routine Builder",
+  "description": "Mobile-first athletic workout tracker, custom routine builder, and live rest timer with performance analytics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
